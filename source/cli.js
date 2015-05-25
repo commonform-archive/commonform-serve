@@ -38,7 +38,7 @@ module.exports = function(stdin, stdout, stderr, env, argv, callback) {
     var level = levelup(dataPath, {db: leveldown});
     bole.output({level: 'debug', stream: stdout});
     var log = bole(meta.name);
-    var port = options.PORT || 0;
+    var port = options.PORT || env.PORT || 0;
     http.createServer(handler(log, level))
       .on('listening', function() {
         log.info({port: this.address().port});
