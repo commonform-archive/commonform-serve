@@ -1,7 +1,7 @@
-var meta = require('../../package.json');
 var badMethodRoute = require('./bad-method');
+var meta = require('../../package.json');
 
-module.exports = function indexRoute(request, response) {
+function indexRoute(request, response) {
   if (request.method === 'GET') {
     response.setHeader('cache-control', 'no-store');
     response.end(JSON.stringify({
@@ -12,4 +12,6 @@ module.exports = function indexRoute(request, response) {
   } else {
     badMethodRoute(request, response);
   }
-};
+}
+
+module.exports = indexRoute;
