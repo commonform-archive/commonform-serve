@@ -7,6 +7,7 @@ var getFormsRoute = require('./routes/get-forms');
 var indexRoute = require('./routes/index');
 var notFoundRoute = require('./routes/not-found');
 var postFormsRoute = require('./routes/post-forms');
+var bookmarkRoute = require('./routes/bookmarks');
 
 module.exports = function(bole, levelup) {
   var level = levelCommonform(levelup);
@@ -14,6 +15,7 @@ module.exports = function(bole, levelup) {
   router.addRoute('/', indexRoute);
   router.addRoute('/forms', postFormsRoute);
   router.addRoute('/forms/:digest', getFormsRoute);
+  router.addRoute('/bookmarks/:bookmark', bookmarkRoute);
   router.addRoute('*', notFoundRoute);
   return function(request, response) {
     request.log = bole(uuid.v4());

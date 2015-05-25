@@ -1,4 +1,5 @@
 var badMethodRoute = require('./bad-method');
+var badInput = require('./bad-input');
 var concat = require('concat-stream');
 
 function parseJSON(input, callback) {
@@ -9,11 +10,6 @@ function parseJSON(input, callback) {
     return callback(e);
   }
   callback(null, json);
-}
-
-function badInput(request, response) {
-  response.statusCode = 400;
-  response.end();
 }
 
 function postFormsRoute(request, response, parameters, splats, level) {
