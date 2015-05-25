@@ -17,6 +17,7 @@
     "bole": "^2.0.0",
     "concat-stream": "^1.4.8",
     "docopt": "^0.6.2",
+    "level-commonform": "^0.4.0",
     "leveldown": "^1.0.6",
     "levelup": "^1.1.0",
     "routes": "^2.0.0",
