@@ -1,9 +1,9 @@
 var bole = require('bole');
-var levelup = require('levelup');
-var sinon = require('sinon');
-var memdown = require('memdown');
-var http = require('http');
 var handler = require('..');
+var http = require('http');
+var levelup = require('levelup');
+var memdown = require('memdown');
+var sinon = require('sinon');
 var test = require('tap').test;
 
 test('GET /forms/:digest databsae error', function(test) {
