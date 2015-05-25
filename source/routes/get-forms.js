@@ -13,7 +13,7 @@ function getFormsRoute(request, response, parameters, splats, level) {
           response.end();
         }
       } else {
-        request.log.info(form);
+        request.log.info({form: form});
         response.end(JSON.stringify(form));
       }
     });

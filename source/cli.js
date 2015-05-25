@@ -41,8 +41,8 @@ module.exports = function(stdin, stdout, stderr, env, argv, callback) {
     var port = options.PORT || 0;
     http.createServer(handler(log, level))
       .on('listening', function() {
-        log.info('Listening on port ' + this.address().port);
-        log.info('Writing to ' + dataPath);
+        log.info({port: this.address().port});
+        log.info({dataPath: dataPath});
       })
       .on('close', callback.bind(this, 0))
       .listen(port);

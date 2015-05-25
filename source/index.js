@@ -21,7 +21,7 @@ module.exports = function(bole, levelup) {
     var route = router.match(url.parse(request.url).pathname);
     request.on('end', function() {
       request.log.info({status: response.statusCode});
-      request.log.info('End');
+      request.log.info({event: 'end'});
     });
     route.fn.apply(null, [
       request, response, route.params, route.splats, level
