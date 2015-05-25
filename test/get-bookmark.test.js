@@ -2,6 +2,7 @@ var http = require('http');
 var concat = require('concat-stream');
 var launchTestServer = require('./server');
 var test = require('tap').test;
+var version = require('../package').version;
 
 test('GET /bookmarks/:existing', function(test) {
   launchTestServer(function(port, callback) {
@@ -15,7 +16,11 @@ test('GET /bookmarks/:existing', function(test) {
       http.request(getRequest, function(getResponse) {
         getResponse.pipe(concat(function(buffer) {
           test.equal(getResponse.statusCode, 200);
-          test.equal(buffer.toString(), digest);
+          test.same(JSON.parse(buffer), {
+            bookmark: bookmark,
+            digest: digest,
+            version: version
+          });
           callback();
           test.end();
         }));

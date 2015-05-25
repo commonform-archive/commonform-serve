@@ -1,7 +1,9 @@
 var concat = require('concat-stream');
 var http = require('http');
 var launchTestServer = require('./server');
+var path = require('path');
 var test = require('tap').test;
+var version = require('../package').version;
 
 test('GET /forms/:nonexistent', function(test) {
   launchTestServer(function(port, callback) {
@@ -21,11 +23,16 @@ test('GET /forms/:existing', function(test) {
     http.request(postRequest, function(response) {
       test.equal(response.statusCode, 201);
       test.equal(typeof response.headers.location, 'string');
+      var digest = path.basename(response.headers.location);
       var getRequest = {path: response.headers.location, port: port};
       http.request(getRequest, function(response) {
         test.equal(response.statusCode, 200);
         response.pipe(concat(function(buffer) {
-          test.same(JSON.parse(buffer), form);
+          test.deepEqual(JSON.parse(buffer), {
+            digest: digest,
+            form: form,
+            version: version
+          });
           callback();
           test.end();
         }));

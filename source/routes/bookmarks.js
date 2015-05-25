@@ -2,6 +2,7 @@ var badInputRoute = require('./bad-input');
 var badMethodRoute = require('./bad-method');
 var concat = require('concat-stream');
 var notFoundRoute = require('./not-found');
+var version = require('../../package').version;
 
 function bookmarksRoute(request, response, parameters, splats, level) {
   var bookmark = parameters.bookmark;
@@ -35,7 +36,11 @@ function bookmarksRoute(request, response, parameters, splats, level) {
           response.end();
         }
       } else {
-        response.end(digest);
+        response.end(JSON.stringify({
+          bookmark: bookmark,
+          digest: digest,
+          version: version
+        }));
       }
     });
   } else {

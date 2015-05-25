@@ -1,9 +1,12 @@
 var badMethodRoute = require('./bad-method');
 var notFoundRoute = require('./not-found');
 
+var version = require('../../package').version;
+
 function getFormsRoute(request, response, parameters, splats, level) {
   if (request.method === 'GET') {
-    level.getForm(parameters.digest, function(error, form) {
+    var digest = parameters.digest;
+    level.getForm(digest, function(error, form) {
       if (error) {
         if (error.notFound) {
           notFoundRoute(request, response);
@@ -13,8 +16,9 @@ function getFormsRoute(request, response, parameters, splats, level) {
           response.end();
         }
       } else {
-        request.log.info({form: form});
-        response.end(JSON.stringify(form));
+        var json = {digest: digest, form: form, version: version};
+        request.log.info(json);
+        response.end(JSON.stringify(json));
       }
     });
   } else {
