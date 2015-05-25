@@ -7,9 +7,15 @@ function postFormsRoute(request, response, parameters, splats, level) {
       var form = JSON.parse(buffer);
       level.putForm(form, function(error, digest) {
         if (error) {
-          request.log.info('400');
-          response.statusCode = 400;
-          response.end();
+          if (error.invalidForm) {
+            request.log.info('400');
+            response.statusCode = 400;
+            response.end();
+          } else {
+            request.log.error(error);
+            response.statusCode = 500;
+            response.end();
+          }
         } else {
           request.log.info('201');
           response.statusCode = 201;
