@@ -1,2 +1,3 @@
 *.tgz
+.commonform
 node_modules
