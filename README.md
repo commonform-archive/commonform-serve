@@ -6,12 +6,3 @@ commonform-serve
 [![build status](https://img.shields.io/travis/commonform/commonform-serve.svg)](http://travis-ci.org/commonform/commonform-serve)
 
 Serve Common Forms over HTTP.
-
-<!-- js
-  // The examples below are run as tests.
-  var commonformServe = require('./');
--->
-
-```js
-typeof commonformServe; // => 'function'
-```
