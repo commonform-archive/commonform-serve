@@ -11,7 +11,7 @@
     "commonform-serve": "./bin/commonform-serve"
   },
   "bugs": {
-    "url": "https://github.com/commonform/commonform-serve.js/issues"
+    "url": "https://github.com/commonform/commonform-serve/issues"
   },
   "dependencies": {
     "bole": "^2.0.0",
@@ -32,7 +32,7 @@
     "sinon": "^1.14.1",
     "tap": "^1.1.0"
   },
-  "homepage": "https://github.com/commonform/commonform-serve.js",
+  "homepage": "https://github.com/commonform/commonform-serve",
   "keywords": [
     "HTTP",
     "contracts",
@@ -46,7 +46,7 @@
   "main": "source/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commonform/commonform-serve.js.git"
+    "url": "git+https://github.com/commonform/commonform-serve.git"
   },
   "scripts": {
     "coverage": "covert -q test/*.test.js",
