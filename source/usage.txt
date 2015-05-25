@@ -1,0 +1,5 @@
+Serve Common Forms over HTTP.
+
+Usage:
+  commonform-serve --help | -h
+  commonform-serve --version | -v
