@@ -7,17 +7,19 @@ test('POST /bookmarks with valid digest and bookmark', function(test) {
   launchTestServer(function(port, callback) {
     var form = {content:['Some content']};
     var bookmark = 'super';
+    var bookmarkPath = '/bookmarks/' + bookmark;
     var formRequest = {method: 'POST', path: '/forms', port: port};
     http.request(formRequest, function(formResponse) {
       test.equal(formResponse.statusCode, 201);
       var digest = path.basename(formResponse.headers.location);
       var bookmarkRequest = {
         method: 'POST',
-        path: '/bookmarks/' + bookmark,
+        path: bookmarkPath,
         port: port
       };
       http.request(bookmarkRequest, function(bookmarkResponse) {
         test.equal(bookmarkResponse.statusCode, 201);
+        test.equal(bookmarkResponse.headers.location, bookmarkPath);
         callback();
         test.end();
       }).end(digest);
