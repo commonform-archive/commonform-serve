@@ -20,7 +20,7 @@ module.exports = function(bole, levelup) {
     request.log.info(request);
     var route = router.match(url.parse(request.url).pathname);
     request.on('end', function() {
-      request.log.info({status: request.statusCode});
+      request.log.info({status: response.statusCode});
       request.log.info('End');
     });
     route.fn.apply(null, [
