@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "bole": "^2.0.0",
+    "concat-stream": "^1.4.8",
     "docopt": "^0.6.2",
     "leveldown": "^1.0.6",
     "levelup": "^1.1.0",
@@ -22,7 +23,6 @@
     "uuid": "^2.0.1"
   },
   "devDependencies": {
-    "concat-stream": "^1.4.8",
     "covert": "^1.1.0",
     "fixpack": "^2.2.0",
     "jscs": "^1.13.1",

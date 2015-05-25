@@ -1,7 +1,8 @@
-var routes = require('routes');
+var concat = require('concat-stream');
 var levelCommonform = require('level-commonform');
-var uuid = require('uuid');
+var routes = require('routes');
 var url = require('url');
+var uuid = require('uuid');
 
 var meta = require('../package.json');
 
@@ -16,6 +17,27 @@ module.exports = function(bole, levelup) {
       version: meta.version
     }));
     request.log.info('Done');
+  });
+
+  router.addRoute('/forms', function formsRoute(request, response) {
+    if (request.method === 'POST') {
+      request.pipe(concat(function(buffer) {
+        var form = JSON.parse(buffer);
+        level.putForm(form, function(error, digest) {
+          if (error) {
+            response.statusCode = 400;
+            response.end();
+          } else {
+            response.statusCode = 201;
+            response.setHeader('location', '/forms/' + digest);
+            response.end();
+          }
+        });
+      }));
+    } else {
+      response.statusCode = 405;
+      response.end();
+    }
   });
 
   router.addRoute('*', function notFoundRoute(request, response) {
