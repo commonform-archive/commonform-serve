@@ -3,13 +3,13 @@ var routes = require('routes');
 var url = require('url');
 var uuid = require('uuid');
 
+var bookmarkRoute = require('./routes/bookmarks');
 var getFormsRoute = require('./routes/get-forms');
 var indexRoute = require('./routes/index');
 var notFoundRoute = require('./routes/not-found');
 var postFormsRoute = require('./routes/post-forms');
-var bookmarkRoute = require('./routes/bookmarks');
 
-module.exports = function(bole, levelup) {
+function requestHandler(bole, levelup) {
   var level = levelCommonform(levelup);
   var router = routes();
   router.addRoute('/', indexRoute);
@@ -29,4 +29,6 @@ module.exports = function(bole, levelup) {
       request, response, route.params, route.splats, level
     ]);
   };
-};
+}
+
+module.exports = requestHandler;

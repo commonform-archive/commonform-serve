@@ -1,5 +1,5 @@
+var badInputRoute = require('./bad-input');
 var badMethodRoute = require('./bad-method');
-var badInput = require('./bad-input');
 var concat = require('concat-stream');
 
 function parseJSON(input, callback) {
@@ -17,12 +17,12 @@ function postFormsRoute(request, response, parameters, splats, level) {
     request.pipe(concat(function(buffer) {
       parseJSON(buffer, function(error, form) {
         if (error) {
-          badInput(request, response);
+          badInputRoute(request, response);
         } else {
           level.putForm(form, function(error, digest) {
             if (error) {
               if (error.invalidForm) {
-                badInput(request, response);
+                badInputRoute(request, response);
               } else {
                 request.log.error(error);
                 response.statusCode = 500;

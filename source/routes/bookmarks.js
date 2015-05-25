@@ -1,4 +1,4 @@
-var badInput = require('./bad-input');
+var badInputRoute = require('./bad-input');
 var badMethodRoute = require('./bad-method');
 var concat = require('concat-stream');
 var notFoundRoute = require('./not-found');
@@ -11,7 +11,7 @@ function bookmarksRoute(request, response, parameters, splats, level) {
       level.putBookmark(digest, bookmark, function(error) {
         if (error) {
           if (error.invalidDigest || error.invalidBookmark) {
-            badInput(request, response);
+            badInputRoute(request, response);
           } else {
             request.log.error(error);
             response.statusCode = 500;

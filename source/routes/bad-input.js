@@ -1,6 +1,6 @@
-function badInput(request, response) {
+function badInputRoute(request, response) {
   response.statusCode = 400;
   response.end();
 }
 
-module.exports = badInput;
+module.exports = badInputRoute;
