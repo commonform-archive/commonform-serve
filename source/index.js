@@ -15,14 +15,16 @@ module.exports = function(bole, levelup) {
   router.addRoute('/forms', postFormsRoute);
   router.addRoute('/forms/:digest', getFormsRoute);
   router.addRoute('*', notFoundRoute);
-  return function(req, res) {
-    req.log = bole(uuid.v4());
-    req.log.info(req);
-    var route = router.match(url.parse(req.url).pathname);
-    req.on('end', function() {
-      req.log.info({status: req.statusCode});
-      req.log.info('End');
+  return function(request, response) {
+    request.log = bole(uuid.v4());
+    request.log.info(request);
+    var route = router.match(url.parse(request.url).pathname);
+    request.on('end', function() {
+      request.log.info({status: request.statusCode});
+      request.log.info('End');
     });
-    route.fn.apply(null, [req, res, route.params, route.splats, level]);
+    route.fn.apply(null, [
+      request, response, route.params, route.splats, level
+    ]);
   };
 };
