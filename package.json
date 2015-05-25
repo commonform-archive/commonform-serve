@@ -23,6 +23,7 @@
     "uuid": "^2.0.1"
   },
   "devDependencies": {
+    "async": "^1.0.0",
     "covert": "^1.1.0",
     "fixpack": "^2.2.0",
     "jscs": "^1.13.1",
