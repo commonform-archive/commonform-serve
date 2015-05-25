@@ -1,5 +1,6 @@
-Serve Common Forms over HTTP.
+Serve Common Forms via HTTP.
 
 Usage:
+  commonform-serve [DATA_PATH] [-p PORT | --port PORT]
   commonform-serve --help | -h
   commonform-serve --version | -v

@@ -14,14 +14,19 @@
     "url": "https://github.com/commonform/commonform-serve.js/issues"
   },
   "dependencies": {
-    "docopt": "^0.6.2"
+    "bole": "^2.0.0",
+    "docopt": "^0.6.2",
+    "leveldown": "^1.0.6",
+    "levelup": "^1.1.0",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
+    "concat-stream": "^1.4.8",
     "covert": "^1.1.0",
     "fixpack": "^2.2.0",
     "jscs": "^1.13.1",
     "jshint": "^2.7.0",
-    "jsmd": "^0.3.0",
+    "memdown": "^1.0.0",
     "tap": "^1.1.0"
   },
   "homepage": "https://github.com/commonform/commonform-serve.js",
@@ -44,6 +49,6 @@
     "coverage": "covert -q test/*.test.js",
     "lint": "fixpack && jshint source test && jscs source test",
     "precommit": "npm run lint && npm run test && npm run coverage",
-    "test": "jsmd README.md && tap test/*.test.js"
+    "test": "tap test/*.test.js"
   }
 }
