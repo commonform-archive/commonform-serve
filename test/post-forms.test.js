@@ -25,3 +25,14 @@ test('POST /forms with an invalid form', function(test) {
     }).end(JSON.stringify(form));
   });
 });
+
+test('POST /forms with invalid JSON', function(test) {
+  launchTestServer(function(port, callback) {
+    var request = {method: 'POST', path: '/forms', port: port};
+    http.request(request, function(response) {
+      test.equal(response.statusCode, 400);
+      callback();
+      test.end();
+    }).end('}');
+  });
+});

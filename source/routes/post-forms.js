@@ -1,26 +1,43 @@
 var badMethodRoute = require('./bad-method');
 var concat = require('concat-stream');
 
+function parseJSON(input, callback) {
+  var json;
+  try {
+    json = JSON.parse(input);
+  } catch (e) {
+    return callback(e);
+  }
+  callback(null, json);
+}
+
+function badInput(request, response) {
+  response.statusCode = 400;
+  response.end();
+}
+
 function postFormsRoute(request, response, parameters, splats, level) {
   if (request.method === 'POST') {
     request.pipe(concat(function(buffer) {
-      var form = JSON.parse(buffer);
-      level.putForm(form, function(error, digest) {
+      parseJSON(buffer, function(error, form) {
         if (error) {
-          if (error.invalidForm) {
-            request.log.info('400');
-            response.statusCode = 400;
-            response.end();
-          } else {
-            request.log.error(error);
-            response.statusCode = 500;
-            response.end();
-          }
+          badInput(request, response);
         } else {
-          request.log.info('201');
-          response.statusCode = 201;
-          response.setHeader('location', '/forms/' + digest);
-          response.end();
+          level.putForm(form, function(error, digest) {
+            if (error) {
+              if (error.invalidForm) {
+                badInput(request, response);
+              } else {
+                request.log.error(error);
+                response.statusCode = 500;
+                response.end();
+              }
+            } else {
+              response.statusCode = 201;
+              response.setHeader('location', '/forms/' + digest);
+              response.end();
+            }
+          });
         }
       });
     }));
