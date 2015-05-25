@@ -2,9 +2,9 @@ var bole = require('bole');
 var docopt = require('docopt');
 var fs = require('fs');
 var http = require('http');
+var join = require('path').join;
 var leveldown = require('leveldown');
 var levelup = require('levelup');
-var join = require('path').join;
 
 var handler = require('..');
 var meta = require('../package.json');
