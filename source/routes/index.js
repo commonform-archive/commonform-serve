@@ -8,7 +8,6 @@ function indexRoute(request, response) {
       service: meta.name,
       version: meta.version
     }));
-    request.log.info('Done');
   } else {
     badMethodRoute(request, response);
   }
