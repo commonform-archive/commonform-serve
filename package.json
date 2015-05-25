@@ -52,7 +52,7 @@
   "scripts": {
     "coverage": "covert -q test/*.test.js",
     "lint": "fixpack && jshint source test && jscs source test",
-    "precommit": "npm run lint && npm run test && npm run coverage",
+    "precommit": "npm run lint && npm run coverage",
     "test": "tap test/*.test.js"
   }
 }
