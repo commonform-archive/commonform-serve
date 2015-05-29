@@ -1,6 +1,6 @@
 var http = require('http');
 var launchTestServer = require('./server');
-var test = require('tap').test;
+var test = require('tape').test;
 var path = require('path');
 
 test('POST /bookmarks with valid digest and bookmark', function(test) {

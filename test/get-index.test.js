@@ -1,7 +1,7 @@
 var concat = require('concat-stream');
 var http = require('http');
 var launchTestServer = require('./server');
-var test = require('tap').test;
+var test = require('tape').test;
 
 var meta = require('../package.json');
 

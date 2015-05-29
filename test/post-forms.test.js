@@ -1,6 +1,6 @@
 var http = require('http');
 var launchTestServer = require('./server');
-var test = require('tap').test;
+var test = require('tape').test;
 
 test('POST /forms with a valid form', function(test) {
   launchTestServer(function(port, callback) {

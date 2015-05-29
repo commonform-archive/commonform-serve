@@ -1,4 +1,4 @@
-require('tap').test('GET /forms', function(test) {
+require('tape').test('GET /forms', function(test) {
   require('./server')(function(port, callback) {
     var request = {method: 'GET', path: '/forms', port: port};
     require('http').request(request, function(response) {

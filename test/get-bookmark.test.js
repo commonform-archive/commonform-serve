@@ -1,7 +1,7 @@
 var http = require('http');
 var concat = require('concat-stream');
 var launchTestServer = require('./server');
-var test = require('tap').test;
+var test = require('tape').test;
 var version = require('../package').version;
 
 test('GET /bookmarks/:existing', function(test) {

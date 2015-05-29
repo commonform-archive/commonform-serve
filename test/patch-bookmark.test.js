@@ -1,4 +1,4 @@
-require('tap').test('PATCH /bookmarks', function(test) {
+require('tape').test('PATCH /bookmarks', function(test) {
   require('./server')(function(port, callback) {
     var request = {method: 'PATCH', path: '/bookmarks/t', port: port};
     require('http').request(request, function(bookmarkResponse) {

@@ -2,7 +2,7 @@ var concat = require('concat-stream');
 var http = require('http');
 var launchTestServer = require('./server');
 var path = require('path');
-var test = require('tap').test;
+var test = require('tape').test;
 
 test('GET /digests?prefix=:prefix', function(test) {
   launchTestServer(function(port, callback) {

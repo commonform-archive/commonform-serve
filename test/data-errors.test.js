@@ -4,7 +4,7 @@ var http = require('http');
 var levelup = require('levelup');
 var memdown = require('memdown');
 var sinon = require('sinon');
-var test = require('tap').test;
+var test = require('tape').test;
 
 test('GET /forms/:digest databsae error', function(test) {
   var level = levelup('', {db: memdown});
