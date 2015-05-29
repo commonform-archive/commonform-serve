@@ -4,6 +4,7 @@ var url = require('url');
 var uuid = require('uuid');
 
 var bookmarkRoute = require('./routes/bookmarks');
+var digestsRoute = require('./routes/digests');
 var getFormsRoute = require('./routes/get-forms');
 var indexRoute = require('./routes/index');
 var notFoundRoute = require('./routes/not-found');
@@ -16,6 +17,7 @@ function requestHandler(bole, levelup) {
   router.addRoute('/forms', postFormsRoute);
   router.addRoute('/forms/:digest', getFormsRoute);
   router.addRoute('/bookmarks/:bookmark', bookmarkRoute);
+  router.addRoute('/digests', digestsRoute);
   router.addRoute('*', notFoundRoute);
   return function(request, response) {
     request.log = bole(uuid.v4());
