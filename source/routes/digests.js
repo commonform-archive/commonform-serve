@@ -1,15 +1,19 @@
 var badMethodRoute = require('./bad-method');
+var url = require('url');
 
 function digestsRoute(request, response, parameters, splats, level) {
   if (request.method === 'GET') {
-    var prefix = parameters.prefix || '';
-    var digests = [];
+    var query = url.parse(request.url, true).query;
+    var prefix = query.prefix;
+    var first = true;
+    response.write('[');
     level.createDigestsReadStream(prefix)
       .on('data', function(digest) {
-        digests.push(digest);
+        response.write((first ? '' : ',') + JSON.stringify(digest));
+        first = false;
       })
       .on('end', function() {
-        response.end(JSON.stringify(digests));
+        response.end(']');
       });
   } else {
     badMethodRoute(request, response);
