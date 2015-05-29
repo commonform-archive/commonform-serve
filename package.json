@@ -26,7 +26,7 @@
     "levelup": "~1.1.0",
     "memdown": "~1.0.0",
     "sinon": "~1.14.1",
-    "tap": "~1.1.0"
+    "tape": "~4.0.0"
   },
   "homepage": "https://github.com/commonform/commonform-serve",
   "keywords": [
@@ -46,6 +46,6 @@
     "coverage": "covert -q test/*.test.js",
     "lint": "fixpack && jshint source test && jscs source test",
     "precommit": "npm run lint && npm run coverage",
-    "test": "tap test/*.test.js"
+    "test": "tape test/*.test.js"
   }
 }
