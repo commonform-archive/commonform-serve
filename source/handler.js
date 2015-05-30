@@ -4,11 +4,11 @@ var url = require('url');
 var uuid = require('uuid');
 
 var bookmarksRoute = require('./routes/bookmarks');
-var digestsRoute = require('./routes/digests');
 var formsByDigestRoute = require('./routes/forms-by-digest');
 var formsRoute = require('./routes/forms');
 var indexRoute = require('./routes/index');
 var notFoundRoute = require('./routes/not-found');
+var namespaceRoute = require('./routes/namespace');
 
 function requestHandler(bole, levelup) {
   var level = levelCommonform(levelup);
@@ -17,7 +17,9 @@ function requestHandler(bole, levelup) {
   router.addRoute('/forms', formsRoute);
   router.addRoute('/forms/:digest', formsByDigestRoute);
   router.addRoute('/bookmarks/:bookmark', bookmarksRoute);
-  router.addRoute('/digests', digestsRoute);
+  ['digests'].forEach(function(plural) {
+    router.addRoute('/' + plural, namespaceRoute(plural));
+  });
   router.addRoute('*', notFoundRoute);
   return function(request, response) {
     request.log = bole(uuid.v4());
