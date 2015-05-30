@@ -11,6 +11,7 @@ var handlers = {
 };
 
 var namespaceRoute = require('./routes/namespace');
+var definitionsRoute = require('./routes/definitions');
 var notFoundRoute = require('./routes/not-found');
 
 function requestHandler(bole, levelup) {
@@ -25,6 +26,7 @@ function requestHandler(bole, levelup) {
     .forEach(function(plural) {
       router.addRoute('/' + plural, namespaceRoute(plural));
     });
+  router.addRoute('/terms/:term/definitions', definitionsRoute);
   router.addRoute('*', notFoundRoute);
 
   return function(request, response) {
