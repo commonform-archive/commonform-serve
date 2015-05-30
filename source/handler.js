@@ -17,9 +17,10 @@ function requestHandler(bole, levelup) {
   router.addRoute('/forms', formsRoute);
   router.addRoute('/forms/:digest', formsByDigestRoute);
   router.addRoute('/bookmarks/:bookmark', bookmarksRoute);
-  ['digests'].forEach(function(plural) {
-    router.addRoute('/' + plural, namespaceRoute(plural));
-  });
+  ['blanks', 'bookmarks', 'digests', 'headings', 'terms']
+    .forEach(function(plural) {
+      router.addRoute('/' + plural, namespaceRoute(plural));
+    });
   router.addRoute('*', notFoundRoute);
   return function(request, response) {
     request.log = bole(uuid.v4());
