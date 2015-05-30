@@ -1,6 +1,5 @@
 var badMethodRoute = require('./bad-method');
 var notFoundRoute = require('./not-found');
-
 var version = require('../../package').version;
 
 function getFormsRoute(request, response, parameters, splats, level) {
