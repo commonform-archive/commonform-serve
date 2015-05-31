@@ -1,9 +1,11 @@
 var badMethodRoute = require('./bad-method');
 
-module.exports = function(type) {
+function generateNamespaceRoute(type) {
   var capitalized = type[0].toUpperCase() + type.slice(1);
 
-  return function(request, response, parameters, splats, level, query) {
+  return function generatedNamespaceRoute(
+    request, response, parameters, splats, level, query
+  ) {
     if (request.method === 'GET') {
       var prefix = query.prefix;
       var first = true;
@@ -20,4 +22,6 @@ module.exports = function(type) {
       badMethodRoute(request, response);
     }
   };
-};
+}
+
+module.exports = generateNamespaceRoute;

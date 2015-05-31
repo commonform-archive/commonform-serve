@@ -1,8 +1,10 @@
 var badMethodRoute = require('./bad-method');
 var version = require('../../package').version;
 
-module.exports = function(search) {
-  return function(request, response, parameters, splats, level) {
+function generateSearchRoute(search) {
+  return function generatedSearchRoute(
+    request, response, parameters, splats, level
+  ) {
     if (request.method === 'GET') {
       var name = parameters.id;
       var pattern = {predicate: search.predicate, object: name};
@@ -24,4 +26,6 @@ module.exports = function(search) {
       badMethodRoute(request, response);
     }
   };
-};
+}
+
+module.exports = generateSearchRoute;

@@ -1,8 +1,9 @@
 var badMethodRoute = require('./bad-method');
+var internalErrorRoute = require('./internal-error');
 var notFoundRoute = require('./not-found');
 var version = require('../../package').version;
 
-function getFormsRoute(request, response, parameters, splats, level) {
+function formsByDigestRoute(request, response, parameters, _, level) {
   if (request.method === 'GET') {
     var digest = parameters.id;
     level.getForm(digest, function(error, form) {
@@ -10,9 +11,7 @@ function getFormsRoute(request, response, parameters, splats, level) {
         if (error.notFound) {
           notFoundRoute(request, response);
         } else {
-          request.log.error(error);
-          response.statusCode = 500;
-          response.end();
+          internalErrorRoute(error, request, response);
         }
       } else {
         var json = {digest: digest, form: form, version: version};
@@ -25,4 +24,4 @@ function getFormsRoute(request, response, parameters, splats, level) {
   }
 }
 
-module.exports = getFormsRoute;
+module.exports = formsByDigestRoute;

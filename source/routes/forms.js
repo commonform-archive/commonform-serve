@@ -1,18 +1,10 @@
 var badInputRoute = require('./bad-input');
 var badMethodRoute = require('./bad-method');
 var concat = require('concat-stream');
+var internalErrorRoute = require('./internal-error');
+var parseJSON = require('../parse-json');
 
-function parseJSON(input, callback) {
-  var json;
-  try {
-    json = JSON.parse(input);
-  } catch (e) {
-    return callback(e);
-  }
-  callback(null, json);
-}
-
-function postFormsRoute(request, response, parameters, splats, level) {
+function formsRoute(request, response, parameters, splats, level) {
   if (request.method === 'POST') {
     request.pipe(concat(function(buffer) {
       parseJSON(buffer, function(error, form) {
@@ -24,9 +16,7 @@ function postFormsRoute(request, response, parameters, splats, level) {
               if (error.invalidForm) {
                 badInputRoute(request, response);
               } else {
-                request.log.error(error);
-                response.statusCode = 500;
-                response.end();
+                internalErrorRoute(error, request, response);
               }
             } else {
               response.statusCode = 201;
@@ -42,4 +32,4 @@ function postFormsRoute(request, response, parameters, splats, level) {
   }
 }
 
-module.exports = postFormsRoute;
+module.exports = formsRoute;

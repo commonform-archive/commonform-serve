@@ -1,7 +1,10 @@
 module.exports = [
   {
-    pattern: '/',
-    function: require('./index')
+    pattern: '/', function: require('./index')
+  },
+  {
+    pattern: '/bookmarks/:id',
+    function: require('./bookmarks')
   },
   {
     pattern: '/forms',
@@ -10,9 +13,5 @@ module.exports = [
   {
     pattern: '/forms/:id',
     function: require('./forms-by-digest')
-  },
-  {
-    pattern: '/bookmarks/:id',
-    function: require('./bookmarks')
   }
 ];
