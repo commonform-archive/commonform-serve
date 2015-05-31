@@ -8,11 +8,11 @@ module.exports = [
     function: require('./routes/forms')
   },
   {
-    pattern: '/forms/:digest',
+    pattern: '/forms/:id',
     function: require('./routes/forms-by-digest')
   },
   {
-    pattern: '/bookmarks/:bookmark',
+    pattern: '/bookmarks/:id',
     function: require('./routes/bookmarks')
   }
 ];

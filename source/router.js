@@ -1,25 +1,23 @@
-var router = require('routes')();
+var router = require('http-hash')();
 
 require('./handlers')
   .forEach(function(handler) {
-    router.addRoute(handler.pattern, handler.function);
+    router.set(handler.pattern, handler.function);
   });
 
 var namespaceRoute = require('./routes/namespace');
 require('./namespaces')
   .forEach(function(plural) {
-    router.addRoute('/' + plural, namespaceRoute(plural));
+    router.set('/' + plural, namespaceRoute(plural));
   });
 
 var searchRoute = require('./routes/search');
 require('./searches')
   .forEach(function(search) {
-    router.addRoute(
-      '/' + search.object.plural + '/:name/' + search.noun.plural,
+    router.set(
+      '/' + search.object.plural + '/:id/' + search.noun.plural,
       searchRoute(search)
     );
   });
-
-router.addRoute('*', require('./routes/not-found'));
 
 module.exports = router;

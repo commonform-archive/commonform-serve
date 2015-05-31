@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "concat-stream": "~1.4.8",
+    "http-hash": "~1.1.1",
     "level-commonform": "~0.5.0",
-    "routes": "~2.0.0",
     "uuid": "~2.0.1"
   },
   "devDependencies": {

@@ -5,7 +5,7 @@ var notFoundRoute = require('./not-found');
 var version = require('../../package').version;
 
 function bookmarksRoute(request, response, parameters, splats, level) {
-  var bookmark = parameters.bookmark;
+  var bookmark = parameters.id;
   if (request.method === 'POST') {
     request.pipe(concat(function(buffer) {
       var digest = buffer.toString();

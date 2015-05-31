@@ -4,7 +4,7 @@ var version = require('../../package').version;
 module.exports = function(search) {
   return function(request, response, parameters, splats, level) {
     if (request.method === 'GET') {
-      var name = parameters.name;
+      var name = parameters.id;
       var pattern = {predicate: search.predicate, object: name};
       response.write('{');
       response.write('"version":' + JSON.stringify(version) + ',');

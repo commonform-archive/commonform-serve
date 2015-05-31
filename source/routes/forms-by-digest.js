@@ -4,7 +4,7 @@ var version = require('../../package').version;
 
 function getFormsRoute(request, response, parameters, splats, level) {
   if (request.method === 'GET') {
-    var digest = parameters.digest;
+    var digest = parameters.id;
     level.getForm(digest, function(error, form) {
       if (error) {
         if (error.notFound) {
