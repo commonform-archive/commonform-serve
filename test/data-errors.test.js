@@ -6,7 +6,7 @@ var memdown = require('memdown');
 var sinon = require('sinon');
 var test = require('tape').test;
 
-test('GET /forms/:digest databsae error', function(test) {
+test('GET /forms/:digest database error', function(test) {
   var level = levelup('', {db: memdown});
   var log = bole('test');
   var mock = sinon.mock(level);

@@ -1,0 +1,147 @@
+{ "/": {
+    "get": {
+      "operationId": "getMetadata",
+      "responses": {
+        "200": {
+          "description": "service metadata",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string" },
+              "version": {
+                "type": "string" } } } } } } },
+  "/bookmarks": {
+    "get": {
+      "operationId": "getBookmarks",
+      "responses": {
+        "200": {
+          "description": "list of bookmark names",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string" } } } } } },
+  "/bookmarks/{name}": {
+    "parameters": [
+      { "name": "name",
+        "description": "bookmark name",
+        "in": "path",
+        "type": "string" } ],
+    "get": {
+      "operationId": "getBookmark",
+      "responses": {
+        "200": {
+          "description": "bookmark",
+          "schema": {
+            "$ref": "#/definitions/bookmark" } } } },
+    "post": {
+      "operationId": "createBookmark",
+      "parameters": [
+        { "name": "digest",
+          "required": true,
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/digest" } } ],
+      "responses": {
+        "201": {
+          "description": "created" } } } },
+  "/forms": {
+    "parameters": [
+      { "name": "form",
+        "in": "body",
+        "required": true,
+        "description": "the form to stote",
+        "schema": {
+          "$ref": "#/definitions/form" } } ] },
+  "/forms/{digest}": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getFormByDigest",
+      "responses": {
+        "200": {
+          "description": "form",
+          "schema": {
+            "$ref": "#/definitions/form" } } } } },
+  "/forms/{digest}/parents": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getParents",
+      "responses": {
+        "200": {
+          "description": "form parents",
+          "schema": {
+            "$ref": "#/definitions/digests" } } } } },
+  "/forms/{digest}/summaries": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getSummaries",
+      "responses": {
+        "200": {
+          "description": "summaries of the form",
+          "schema": {
+            "$ref": "#/definitions/summaries" } } } } },
+  "/forms/{digest}/definitions": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getDefinitions",
+      "responses": {
+        "200": {
+          "description": "terms defined in the form",
+          "schema": {
+            "$ref": "#/definitions/terms" } } } } },
+  "/forms/{digest}/references": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getReferences",
+      "responses": {
+        "200": {
+          "description": "headings referenced",
+          "schema": {
+            "$ref": "#/definitions/headings" } } } } },
+  "/forms/{digest}/utilizations": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getUtilizations",
+      "responses": {
+        "200": {
+          "description": "headings utilized",
+          "schema": {
+            "$ref": "#/definitions/headings" } } } } },
+  "/forms/{digest}/insertions": {
+    "parameters": [
+      { "$ref": "#/parameters/pathDigest" } ],
+    "get": {
+      "operationId": "getInsertions",
+      "responses": {
+        "200": {
+          "description": "blanks inserted",
+          "schema": {
+            "$ref": "#/definitions/blanks" } } } } },
+  "/terms": {
+    "get": {
+      "operationId": "getTerms",
+      "responses": {
+        "200": {
+          "description": "terms",
+          "schema": {
+            "$ref": "#/definitions/terms" } } } } },
+  "/digests": {
+    "get": {
+      "operationId": "getDigests",
+      "responses": {
+        "200": {
+          "description": "list of form digests",
+          "schema": {
+            "$ref": "#/definitions/digests" } } } },
+    "parameters": [
+      { "name": "prefix",
+        "in": "query",
+        "pattern": "^[a-f0-9]{1,63}$",
+        "required": false,
+        "type": "string" } ] } }

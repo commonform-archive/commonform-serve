@@ -1,0 +1,6 @@
+{ "pathDigest": {
+    "name": "digest",
+    "in": "path",
+    "description": "form digest",
+    "required": true,
+    "type": "string" } }

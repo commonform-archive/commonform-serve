@@ -1,0 +1,38 @@
+{ "bookmark": {
+    "type": "object",
+    "properties": {
+      "bookmark": {
+        "type": "string" },
+      "digest": {
+        "$ref": "#/definitions/digest" },
+      "version": {
+        "type": "string" } } },
+  "digest": {
+    "type": "string",
+    "pattern": "^[a-f0-9]{64}$" },
+  "digests": {
+    "type": "array",
+    "items": {
+      "$ref": "#/definitions/digest" } },
+  "form": {
+    "type": "object",
+    "properties": {
+      "conspicuous": {
+        "enum": [ "yes" ] },
+      "content": { } } },
+  "summaries": {
+    "type": "array",
+    "items": {
+      "type": "string" } },
+  "headings": {
+    "type": "array",
+    "items": {
+      "type": "string" } },
+  "terms": {
+    "type": "array",
+    "items": {
+      "type": "string" } },
+  "blanks": {
+    "type": "array",
+    "items": {
+      "type": "string" } } }

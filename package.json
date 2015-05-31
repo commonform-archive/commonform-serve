@@ -1,7 +1,7 @@
 {
   "name": "commonform-serve",
   "description": "serve Common Forms over HTTP",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": {
     "name": "Kyle E. Mitchell",
     "email": "kyle@kemitchell.com",
@@ -25,6 +25,8 @@
     "levelup": "~1.1.0",
     "memdown": "~1.0.0",
     "sinon": "~1.14.1",
+    "swagger-client": "~2.1.2",
+    "swagger-tools": "~0.9.0",
     "tape": "~4.0.0"
   },
   "homepage": "https://github.com/commonform/commonform-serve",
@@ -45,6 +47,7 @@
     "coverage": "covert -q test/*.test.js",
     "lint": "fixpack && jshint source test && jscs source test",
     "precommit": "npm run lint && npm run coverage",
+    "pretest": "node swagger/index.js | swagger-tools validate /dev/stdin",
     "test": "tape test/*.test.js"
   }
 }
