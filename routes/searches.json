@@ -1,72 +1,42 @@
-[
-  {
-    "predicate": "defines",
+[ { "predicate": "defines",
     "noun": {
-      "plural": "definitions"
-    },
+      "plural": "definitions" },
     "object": {
       "singular": "term",
-      "plural": "terms"
-    }
-  },
-  {
-    "predicate": "uses",
+      "plural": "terms" } },
+  { "predicate": "uses",
     "noun": {
-      "plural": "uses"
-    },
+      "plural": "uses" },
     "object": {
       "singular": "term",
-      "plural": "terms"
-    }
-  },
-  {
-    "predicate": "references",
+      "plural": "terms" } },
+  { "predicate": "references",
     "noun": {
-      "plural": "references"
-    },
+      "plural": "references" },
     "object": {
       "singular": "heading",
-      "plural": "headings"
-    }
-  },
-  {
-    "predicate": "utilizes",
+      "plural": "headings" } },
+  { "predicate": "utilizes",
     "noun": {
-      "plural": "utilizations"
-    },
+      "plural": "utilizations" },
     "object": {
       "singular": "heading",
-      "plural": "headings"
-    }
-  },
-  {
-    "predicate": "inserts",
+      "plural": "headings" } },
+  { "predicate": "inserts",
     "noun": {
-      "plural": "insertions"
-    },
+      "plural": "insertions" },
     "object": {
       "singular": "blank",
-      "plural": "blanks"
-    }
-  },
-  {
-    "predicate": "includes",
+      "plural": "blanks" } },
+  { "predicate": "includes",
     "noun": {
-      "plural": "parents"
-    },
+      "plural": "parents" },
     "object": {
       "singular": "form",
-      "plural": "forms"
-    }
-  },
-  {
-    "predicate": "summarizes",
+      "plural": "forms" } },
+  { "predicate": "summarizes",
     "noun": {
-      "plural": "summaries"
-    },
+      "plural": "summaries" },
     "object": {
       "singular": "form",
-      "plural": "forms"
-    }
-  }
-]
+      "plural": "forms" } } ]
