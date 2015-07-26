@@ -1,5 +1,5 @@
 var badMethodRoute = require('./bad-method');
-var version = require('../../package').version;
+var version = require('../package').version;
 
 function generateSearchRoute(search) {
   return function generatedSearchRoute(

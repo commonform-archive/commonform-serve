@@ -2,14 +2,7 @@
   "name": "commonform-serve",
   "description": "serve Common Forms over HTTP",
   "version": "0.3.4",
-  "author": {
-    "name": "Kyle E. Mitchell",
-    "email": "kyle@kemitchell.com",
-    "url": "http://kemitchell.com"
-  },
-  "bugs": {
-    "url": "https://github.com/commonform/commonform-serve/issues"
-  },
+  "author":"Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com)",
   "dependencies": {
     "concat-stream": "~1.4.8",
     "http-hash": "~1.1.1",
@@ -19,15 +12,11 @@
   "devDependencies": {
     "bole": "~2.0.0",
     "covert": "~1.1.0",
-    "fixpack": "~2.2.0",
-    "jscs": "~1.13.1",
-    "jshint": "~2.7.0",
     "levelup": "~1.1.0",
     "memdown": "~1.0.0",
     "sinon": "~1.14.1",
     "tape": "~4.0.0"
   },
-  "homepage": "https://github.com/commonform/commonform-serve",
   "keywords": [
     "HTTP",
     "contracts",
@@ -36,15 +25,10 @@
     "law"
   ],
   "license": "Apache-2.0",
-  "main": "source/handler.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/commonform/commonform-serve.git"
-  },
+  "repository": "commonform/commonform-serve",
   "scripts": {
     "coverage": "covert -q test/*.test.js",
-    "lint": "fixpack && jshint source test && jscs source test",
-    "precommit": "npm run lint && npm run coverage",
+    "precommit": "npm run coverage",
     "test": "tape test/*.test.js"
   }
 }

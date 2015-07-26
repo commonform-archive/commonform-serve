@@ -3,7 +3,7 @@ var badMethodRoute = require('./bad-method');
 var concat = require('concat-stream');
 var internalErrorRoute = require('./internal-error');
 var notFoundRoute = require('./not-found');
-var version = require('../../package').version;
+var version = require('../package').version;
 
 // Handle requests to post or get bookmarks.
 function bookmarksRoute(request, response, parameters, splats, level) {
