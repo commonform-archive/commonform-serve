@@ -7,7 +7,7 @@ module.exports = formsByDigestRoute
 
 function formsByDigestRoute(request, response, digest, level) {
   if (request.method === 'GET') {
-    level.getForm(digest, function(error, form) {
+    level.get(digest, function(error, form) {
       if (error) {
         if (error.notFound) { notFoundRoute(request, response) }
         else { internalErrorRoute(error, request, response) } }

@@ -6,7 +6,7 @@
   "dependencies": {
     "concat-stream": "^1.4.8",
     "is-sha-256-hex-digest": "^1.0.0",
-    "level-commonform": "^0.6.0",
+    "level-commonform": "commonform/level-commonform#rewrite",
     "uuid": "^2.0.1"
   },
   "devDependencies": {

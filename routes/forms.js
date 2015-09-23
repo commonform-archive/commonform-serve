@@ -13,9 +13,9 @@ function formsRoute(request, response, level) {
         if (error) {
           badInputRoute(request, response) }
         else {
-          level.putForm(form, function(error, digest) {
+          level.put(form, function(error, digest) {
             if (error) {
-              if (error.invalidForm) {
+              if (error.message === 'Invalid form') {
                 badInputRoute(request, response) }
               else {
                 internalErrorRoute(error, request, response) } }
@@ -23,5 +23,11 @@ function formsRoute(request, response, level) {
               response.statusCode = 201
               response.setHeader('location', ( '/forms/' + digest ))
               response.end() } }) } }) })) }
+  else if (request.method === 'GET') {
+    level.createKeyStream()
+      .on('data', function(key) {
+        response.write(key + '\n') })
+      .on('end', function() {
+        response.end() }) }
   else {
     badMethodRoute(request, response) } }
