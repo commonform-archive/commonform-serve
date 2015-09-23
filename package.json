@@ -2,14 +2,7 @@
   "name": "commonform-serve",
   "description": "serve Common Forms over HTTP",
   "version": "0.4.0",
-  "author": {
-    "name": "Kyle E. Mitchell",
-    "email": "kyle@kemitchell.com",
-    "url": "http://kemitchell.com"
-  },
-  "bugs": {
-    "url": "https://github.com/commonform/commonform-serve/issues"
-  },
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com)",
   "dependencies": {
     "concat-stream": "~1.4.8",
     "http-hash": "~1.1.1",
@@ -24,7 +17,6 @@
     "sinon": "~1.14.1",
     "tape": "~4.0.0"
   },
-  "homepage": "https://github.com/commonform/commonform-serve",
   "keywords": [
     "HTTP",
     "contracts",
@@ -34,10 +26,7 @@
   ],
   "license": "Apache-2.0",
   "main": "source/handler.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/commonform/commonform-serve.git"
-  },
+  "repository": "commonform/commonform-serve",
   "scripts": {
     "coverage": "covert -q test/*.test.js",
     "test": "tape test/*.test.js"
