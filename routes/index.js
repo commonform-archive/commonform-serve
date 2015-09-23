@@ -1,5 +1,5 @@
 var badMethodRoute = require('./bad-method');
-var meta = require('../../package.json');
+var meta = require('../package.json');
 
 function indexRoute(request, response) {
   if (request.method === 'GET') {
