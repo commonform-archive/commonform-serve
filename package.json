@@ -40,7 +40,6 @@
   },
   "scripts": {
     "coverage": "covert -q test/*.test.js",
-    "precommit": "npm run coverage",
     "test": "tape test/*.test.js"
   }
 }
