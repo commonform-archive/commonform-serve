@@ -19,9 +19,6 @@
   "devDependencies": {
     "bole": "~2.0.0",
     "covert": "~1.1.0",
-    "fixpack": "~2.2.0",
-    "jscs": "~1.13.1",
-    "jshint": "~2.7.0",
     "levelup": "~1.1.0",
     "memdown": "~1.0.0",
     "sinon": "~1.14.1",
@@ -43,8 +40,7 @@
   },
   "scripts": {
     "coverage": "covert -q test/*.test.js",
-    "lint": "fixpack && jshint source test && jscs source test",
-    "precommit": "npm run lint && npm run coverage",
+    "precommit": "npm run coverage",
     "test": "tape test/*.test.js"
   }
 }
