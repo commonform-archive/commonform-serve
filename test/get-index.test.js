@@ -8,7 +8,6 @@ test('GET /', function(test) {
   launchTestServer(function(port, callback) {
     http.get({ path: '/', port: port }, function(response) {
       test.equal(response.statusCode, 200)
-      test.equal(response.headers['cache-control'], 'no-store')
       response.pipe(concat(function(buffer) {
         test.same(JSON.parse(buffer), {
           service: meta.name,
