@@ -3,9 +3,8 @@ var internalErrorRoute = require('./internal-error');
 var notFoundRoute = require('./not-found');
 var version = require('../package.json').version;
 
-function formsByDigestRoute(request, response, parameters, _, level) {
+function formsByDigestRoute(request, response, digest, level) {
   if (request.method === 'GET') {
-    var digest = parameters.id;
     level.getForm(digest, function(error, form) {
       if (error) {
         if (error.notFound) {

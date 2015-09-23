@@ -5,7 +5,7 @@
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com)",
   "dependencies": {
     "concat-stream": "^1.4.8",
-    "http-hash": "^2.0.0",
+    "is-sha-256-hex-digest": "^1.0.0",
     "level-commonform": "^0.6.0",
     "uuid": "^2.0.1"
   },

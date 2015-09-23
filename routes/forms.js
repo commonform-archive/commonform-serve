@@ -4,7 +4,7 @@ var concat = require('concat-stream');
 var internalErrorRoute = require('./internal-error');
 var parseJSON = require('../parse-json');
 
-function formsRoute(request, response, parameters, splats, level) {
+function formsRoute(request, response, level) {
   if (request.method === 'POST') {
     request.pipe(concat(function(buffer) {
       parseJSON(buffer, function(error, form) {

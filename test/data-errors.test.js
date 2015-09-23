@@ -14,7 +14,7 @@ test('GET /forms/:digest database error', function(test) {
   http.createServer(handler(log, level)).listen(0, function() {
     var server = this;
     var port = server.address().port;
-    var request = {path: '/forms/x', port: port};
+    var request = {path: '/forms/' + 'a'.repeat(64), port: port};
     http.request(request, function(response) {
       test.equal(response.statusCode, 500);
       mock.verify();

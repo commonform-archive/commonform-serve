@@ -1,8 +1,12 @@
+var isSHA256 = require('is-sha-256-hex-digest');
 var levelCommonform = require('level-commonform');
 var notFoundRoute = require('./routes/not-found');
-var router = require('./router');
 var url = require('url');
 var uuid = require('uuid');
+
+var forms = require('./routes/forms');
+var formsByDigest = require('./routes/forms-by-digest');
+var index = require('./routes/index');
 
 // Generate an HTTP request handler, given a bole logger and a
 // LevelUp-compatible data store.
@@ -28,22 +32,13 @@ function requestHandler(bole, levelup) {
 
     // Route the request to the appropriate handler.
     var parsed = url.parse(request.url, true);
-    var route = router.get(parsed.pathname);
-    if (route.handler) {
-      route.handler.apply(null, [
-        request,
-        response,
-        // Decode URL parameters.
-        Object.keys(route.params)
-          .reduce(function(params, key) {
-            params[key] = decodeURIComponent(route.params[key]);
-            return params;
-          }, {}),
-        route.splat,
-        level,
-        parsed.query
-      ]);
-
+    var pathname = parsed.pathname;
+    if (pathname === '/') {
+      index(request, response);
+    } else if (pathname === '/forms/' || pathname === '/forms') {
+      forms(request, response, level);
+    } else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
+      formsByDigest(request, response, pathname.slice(7), level);
     // The router did not match to a request handler.
     } else {
       notFoundRoute(request, response);
