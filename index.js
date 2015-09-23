@@ -32,7 +32,7 @@ function requestHandler(bole, levelup) {
         request.log.info({ event: 'end' }) })
 
     // Route the request to the appropriate handler.
-    var parsed = url.parse(request.url, true)
+    var parsed = url.parse(request.url)
     var pathname = parsed.pathname
     if (pathname === '/') {
       index(request, response) }
