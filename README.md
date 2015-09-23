@@ -1,8 +1,5 @@
-commonform-serve
-================
+Given a [bole][bole] logger and a [LevelUP][levelup], returns a [standard Node.js HTTP server request listener][http] that stores and serves Common Forms.
 
-[![npm version](https://img.shields.io/npm/v/commonform-serve.svg)](https://www.npmjs.com/package/commonform-serve)
-[![license](https://img.shields.io/badge/license-Apache--2.0-303284.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![build status](https://img.shields.io/travis/commonform/commonform-serve.svg)](http://travis-ci.org/commonform/commonform-serve)
-
-Serve Common Forms over HTTP.
+[bole]: https://npmjs.com/packages/bole
+[http]: https://nodejs.org/api/http.html
+[levelup]: https://npmjs.com/packages/levelup
