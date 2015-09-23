@@ -24,8 +24,7 @@ function requestHandler(bole, levelup) {
     request.log = bole(uuid.v4())
     request.log.info(request)
 
-    // Ensure that the end of the request and resulting HTTP status are
-    // logged, regardless of routing.
+    // Log that the end of the request and HTTP status.
     request
       .on('end', function() {
         request.log.info({ status: response.statusCode })
@@ -40,6 +39,6 @@ function requestHandler(bole, levelup) {
       forms(request, response, level) }
     else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
       formsByDigest(request, response, pathname.slice(7), level) }
-    // The router did not match to a request handler.
+    // The request did not map a request handler.
     else {
       notFoundRoute(request, response) } } }
