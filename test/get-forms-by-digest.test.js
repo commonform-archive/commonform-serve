@@ -3,7 +3,7 @@ var http = require('http');
 var launchTestServer = require('./server');
 var path = require('path');
 var test = require('tape').test;
-var version = require('../package').version;
+var version = require('../package.json').version;
 
 test('GET /forms/:nonexistent', function(test) {
   launchTestServer(function(port, callback) {

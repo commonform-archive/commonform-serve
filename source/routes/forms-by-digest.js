@@ -1,7 +1,7 @@
 var badMethodRoute = require('./bad-method');
 var internalErrorRoute = require('./internal-error');
 var notFoundRoute = require('./not-found');
-var version = require('../../package').version;
+var version = require('../../package.json').version;
 
 function formsByDigestRoute(request, response, parameters, _, level) {
   if (request.method === 'GET') {
