@@ -116,3 +116,35 @@ tape('POST and GET a deep form', function(test) {
           done()
           test.end() })) }) })
     .end(JSON.stringify(posted)) }) })
+
+tape('GET /forms', function(test) {
+  var posted = {
+    content: [
+      'Some text',
+      { heading: 'Some Heading',
+        form: { content: [ 'More text!' ] } } ] }
+  var parentDigest = merkleize(posted).digest
+  var childDigest = merkleize(posted.content[1].form).digest
+  server(function(port, done) {
+    var post = {
+      method: 'POST',
+      path: '/forms',
+      port: port }
+    http.request(post, function(response) {
+      test.equal(
+        response.statusCode, 201,
+        'responds 201')
+      var get = {
+        path: '/forms',
+        port: port }
+      http.get(get, function(response) {
+        response.pipe(concat(function(buffer) {
+          test.same(
+            buffer.toString(),
+            ( [ parentDigest, childDigest ]
+              .sort()
+              .join('\n') + '\n' ),
+            'serves list of digests')
+          done()
+          test.end() })) }) })
+    .end(JSON.stringify(posted)) }) })
