@@ -3,10 +3,14 @@ var http = require('http')
 var meta = require('../package.json')
 var server = require('./server')
 var tape = require('tape')
+var isSHA256 = require('is-sha-256-hex-digest')
 
 tape('GET /', function(test) {
   server(function(port, done) {
-    http.get({ path: '/', port: port }, function(response) {
+    var request = {
+      path: '/',
+      port: port }
+    http.get(request, function(response) {
       test.equal(
         response.statusCode, 200,
         'responds 200')
@@ -19,11 +23,49 @@ tape('GET /', function(test) {
         done()
         test.end() })) }) }) })
 
-tape('POST /', function(test) {
+tape('POST / with valid form', function(test) {
+  var form = { content: [ 'Some text' ] }
   server(function(port, done) {
-    http.get({ method: 'POST', path: '/', port: port }, function(response) {
+    var request = {
+      method: 'POST',
+      path: '/',
+      port: port }
+    http.request(request, function(response) {
       test.equal(
-        response.statusCode, 405,
-        'responds 405')
+        response.statusCode, 201,
+        'responds 201')
+      test.assert(
+        isSHA256(response.headers.location.slice(1)),
+        'sets Location header')
       done()
-      test.end() }) }) })
+      test.end() })
+    .end(JSON.stringify(form)) }) })
+
+tape('POST / with invalid form', function(test) {
+  var form = { blah: 'blah' }
+  server(function(port, done) {
+    var request = {
+      method: 'POST',
+      path: '/',
+      port: port }
+    http.request(request, function(response) {
+      test.equal(
+        response.statusCode, 400,
+        'responds 400')
+      done()
+      test.end() })
+    .end(JSON.stringify(form)) }) })
+
+tape('POST / with non-JSON', function(test) {
+  server(function(port, done) {
+    var request = {
+      method: 'POST',
+      path: '/',
+      port: port }
+    http.request(request, function(response) {
+      test.equal(
+        response.statusCode, 400,
+        'responds 400')
+      done()
+      test.end() })
+    .end('just plain text') }) })
