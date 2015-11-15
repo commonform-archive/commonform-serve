@@ -1,32 +1,32 @@
-var meta = require('./package.json')
-var post = require('./post')
+var get = require('./routes/get')
+var isSHA256 = require('is-sha-256-hex-digest')
+var post = require('./routes/post')
+var root = require('./routes/root')
+var url = require('url')
 
 module.exports = function(bole, level) {
   return function(request, response) {
     var method = request.method
-    if (method === 'GET') {
-      var url = require('url').parse(request.url)
-      if (url.pathname === '/') {
-        response.setHeader('Content-Type', 'application/json')
-        response.end(
-          JSON.stringify({
-            service: meta.name,
-            version: meta.version })) }
+    var parsed = url.parse(request.url)
+    var pathname = parsed.pathname
+    if (pathname === '/') {
+      if (method === 'GET') {
+        root(bole, level, request, response) }
       else {
-        var digest = url.pathname.slice(1)
-        level.get(digest, function(error, data) {
-          if (error) {
-            if (error.notFound) {
-              response.statusCode = 404
-              response.end() }
-            else {
-              response.statusCode = 500
-              response.end() } }
-          else {
-            response.setHeader('Content-Type', 'application/json')
-            response.end(data) } }) } }
-    else if (method === 'POST') {
-      post(bole, level, request, response) }
+        response.statusCode = 405
+        response.end() } }
+    else if (pathname === '/forms/' || pathname === '/forms') {
+      if (method === 'POST') {
+        post(bole, level, request, response) }
+      else {
+        response.statusCode = 405
+        response.end() } }
+    else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
+      if (method === 'GET') {
+        get(bole, level, request, response) }
+      else {
+        response.statusCode = 405
+        response.end() } }
     else {
-      response.statusCode = 405
+      response.statusCode = 404
       response.end() } } }
