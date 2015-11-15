@@ -1,11 +1,13 @@
 var concat = require('concat-stream')
 var http = require('http')
 var isSHA256 = require('is-sha-256-hex-digest')
+var normalize = require('commonform-normalize')
 var server = require('./server')
 var tape = require('tape')
 
 tape('POST / with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
+  var digest = normalize(form).digest
   server(function(port, done) {
     var request = {
       method: 'POST',
@@ -16,8 +18,11 @@ tape('POST / with valid form', function(test) {
         response.statusCode, 201,
         'responds 201')
       test.assert(
-        isSHA256(response.headers.location.slice(7)),
+        response.headers.hasOwnProperty('location'),
         'sets Location header')
+      test.assert(
+        response.headers.location.indexOf(digest),
+        'location includes digest')
       done()
       test.end() })
     .end(JSON.stringify(form)) }) })
