@@ -1,3 +1,4 @@
+var feed = require('./routes/feed')
 var get = require('./routes/get')
 var isSHA256 = require('is-sha-256-hex-digest')
 var post = require('./routes/post')
@@ -24,6 +25,12 @@ module.exports = function(bole, level) {
     else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
       if (method === 'GET') {
         get(bole, level, request, response) }
+      else {
+        response.statusCode = 405
+        response.end() } }
+    else if (pathname === '/feed' || pathname === '/feed/') {
+      if (method === 'GET') {
+        feed(bole, level, request, response) }
       else {
         response.statusCode = 405
         response.end() } }
