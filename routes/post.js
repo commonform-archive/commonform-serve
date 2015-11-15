@@ -1,6 +1,6 @@
 var concat = require('concat-stream')
 var normalize = require('commonform-normalize')
-var parseJSON = require('./parse-json')
+var parseJSON = require('../parse-json')
 var validate = require('commonform-validate')
 
 module.exports = function post(bole, level, request, response) {
@@ -22,7 +22,7 @@ module.exports = function post(bole, level, request, response) {
           var normalized = normalize(form)
           var root = normalized.root
           delete normalized.root
-          var location = ( '/' + root )
+          var location = ( '/forms/' + root )
           var batch = Object.keys(normalized)
             .map(function(digest) {
               return {
