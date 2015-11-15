@@ -15,7 +15,9 @@
     "test": "tape test/*.test.js"
   },
   "dependencies": {
-    "commonform-normalize": "^0.5.1",
+    "commonform-merkleize": "^0.3.2",
+    "commonform-predicate": "^0.4.3",
+    "commonform-serialize": "^0.4.2",
     "commonform-validate": "^0.6.0",
     "concat-stream": "^1.5.1",
     "is-sha-256-hex-digest": "^1.0.0"

@@ -1,13 +1,13 @@
 var concat = require('concat-stream')
 var http = require('http')
 var isSHA256 = require('is-sha-256-hex-digest')
-var normalize = require('commonform-normalize')
+var merkleize = require('commonform-merkleize')
 var server = require('./server')
 var tape = require('tape')
 
 tape('POST / with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
-  var digest = normalize(form).digest
+  var digest = merkleize(form).digest
   server(function(port, done) {
     var request = {
       method: 'POST',
@@ -79,6 +79,39 @@ tape('POST and GET a form', function(test) {
           test.same(
             served,
             posted,
+            'serves the same form back')
+          done()
+          test.end() })) }) })
+    .end(JSON.stringify(posted)) }) })
+
+tape('POST and GET a deep form', function(test) {
+  var posted = {
+    content: [
+      'Some text',
+      { heading: 'Some Heading',
+        form: { content: [ 'More text!' ] } } ] }
+  var child = posted.content[1].form
+  var childDigest = merkleize(child).digest
+  server(function(port, done) {
+    var post = {
+      method: 'POST',
+      path: '/forms',
+      port: port }
+    http.request(post, function(response) {
+      test.equal(
+        response.statusCode, 201,
+        'responds 201')
+      test.assert(
+        isSHA256(response.headers.location.slice(7)),
+        'sets Location header')
+      var get = {
+        path: ( '/forms/' + childDigest ),
+        port: port }
+      http.get(get, function(response) {
+        response.pipe(concat(function(buffer) {
+          var served = JSON.parse(buffer)
+          test.same(
+            served, child,
             'serves the same form back')
           done()
           test.end() })) }) })

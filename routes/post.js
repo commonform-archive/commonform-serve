@@ -1,9 +1,12 @@
+module.exports = post
+
+var batchForms = require('../batch-forms')
 var concat = require('concat-stream')
-var normalize = require('commonform-normalize')
+var merkleize = require('commonform-merkleize')
 var parseJSON = require('../parse-json')
 var validate = require('commonform-validate')
 
-module.exports = function post(bole, level, request, response) {
+function post(bole, level, request, response) {
   request.pipe(concat(function(buffer) {
     parseJSON(buffer, function(error, form) {
       // Invalid JSON
@@ -19,17 +22,11 @@ module.exports = function post(bole, level, request, response) {
           response.end() }
         // Valid Common Form
         else {
-          var normalized = normalize(form)
-          var root = normalized.root
-          delete normalized.root
-          var location = ( '/forms/' + root )
-          var batch = Object.keys(normalized)
-            .map(function(digest) {
-              return {
-                type: 'put',
-                key: digest,
-                value: JSON.stringify(normalized[digest]) } })
-          level.batch(batch, function(error) {
+          var merkle = merkleize(form)
+          var location = ( '/forms/' + merkle.digest )
+          var batch = level.batch()
+          batchForms(batch, form, merkle)
+          batch.write(function(error) {
             if (error) {
               response.statusCode = 500
               response.end() }
