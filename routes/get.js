@@ -7,8 +7,7 @@ module.exports = function get(bole, level, request, response) {
   level.get(digest, function(error, data) {
     if (error) {
       if (error.notFound) {
-        response.statusCode = 404
-        response.end() }
+        notFound(response) }
       else {
         internalError(response) } }
     else {
