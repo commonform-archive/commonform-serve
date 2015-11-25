@@ -14,7 +14,12 @@ module.exports = function(bole, level) {
     var method = request.method
     var parsed = url.parse(request.url)
     var pathname = parsed.pathname
-    if (pathname === '/') {
+    if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
+      if (method === 'GET') {
+        get(bole, level, request, response) }
+      else {
+        methodNotAllowed(response) } }
+    else if (pathname === '/') {
       if (method === 'GET') {
         root(bole, level, request, response) }
       else {
@@ -24,11 +29,6 @@ module.exports = function(bole, level) {
         post(bole, level, callback, request, response) }
       else if (method === 'GET') {
         list(bole, level, request, response) }
-      else {
-        methodNotAllowed(response) } }
-    else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
-      if (method === 'GET') {
-        get(bole, level, request, response) }
       else {
         methodNotAllowed(response) } }
     else if (pathname === '/callbacks') {
