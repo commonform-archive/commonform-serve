@@ -1,6 +1,7 @@
 var get = require('./routes/get')
 var isSHA256 = require('is-sha-256-hex-digest')
 var list = require('./routes/list')
+var methodNotAllowed = require('./routes/method-not-allowed')
 var post = require('./routes/post')
 var root = require('./routes/root')
 var url = require('url')
@@ -16,28 +17,24 @@ module.exports = function(bole, level) {
       if (method === 'GET') {
         root(bole, level, request, response) }
       else {
-        response.statusCode = 405
-        response.end() } }
+        methodNotAllowed(response) } }
     else if (pathname === '/forms/' || pathname === '/forms') {
       if (method === 'POST') {
         post(bole, level, callback, request, response) }
       else if (method === 'GET') {
         list(bole, level, request, response) }
       else {
-        response.statusCode = 405
-        response.end() } }
+        methodNotAllowed(response) } }
     else if (pathname.startsWith('/forms/') && isSHA256(pathname.slice(7))) {
       if (method === 'GET') {
         get(bole, level, request, response) }
       else {
-        response.statusCode = 405
-        response.end() } }
+        methodNotAllowed(response) } }
     else if (pathname === '/callbacks') {
       if (method === 'POST') {
         callback.handler(request, response) }
       else {
-        response.statusCode = 405
-        response.end() } }
+        methodNotAllowed(response) } }
     else {
       response.statusCode = 404
       response.end() } } }

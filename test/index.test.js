@@ -21,3 +21,16 @@ tape('GET /', function(test) {
           'serves JSON with service name and version')
         done()
         test.end() })) }) }) })
+
+tape('POST /', function(test) {
+  server(function(port, done) {
+    var request = {
+      path: '/',
+      method: 'POST',
+      port: port }
+    http.get(request, function(response) {
+      test.equal(
+        response.statusCode, 405,
+        'responds 405')
+      done()
+      test.end() }) }) })
