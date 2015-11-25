@@ -82,6 +82,26 @@ tape('POST /forms with non-JSON', function(test) {
       test.end() })
     .end('just plain text') }) })
 
+tape('PUT /forms', function(test) {
+  server(function(port, done) {
+    var request = { method: 'PUT', path: '/forms', port: port }
+    http.request(request, function(response) {
+      test.equal(response.statusCode, 405, 'responds 405')
+      done()
+      test.end() })
+    .end() }) })
+
+tape('PUT /forms/<digest>', function(test) {
+  var digest = 'a'.repeat(64)
+  var path = ( '/forms/' + digest )
+  server(function(port, done) {
+    var request = { method: 'PUT', path: path, port: port }
+    http.request(request, function(response) {
+      test.equal(response.statusCode, 405, 'responds 405')
+      done()
+      test.end() })
+    .end() }) })
+
 tape('POST and GET a form', function(test) {
   var posted = { content: [ 'Some text' ] }
   server(function(port, done) {

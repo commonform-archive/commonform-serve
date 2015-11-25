@@ -26,6 +26,15 @@ tape('POST /callbacks with bad URL', function(test) {
         test.end() })
       .end('blah blah blah') }) })
 
+tape('GET /callbacks', function(test) {
+  server(function(port, done) {
+    var request = { method: 'GET', path: '/callbacks', port: port }
+    http.request(request, function(response) {
+      test.equal(response.statusCode, 405, 'responds 405')
+      done()
+      test.end() })
+    .end() }) })
+
 tape('callback on POST /forms', function(test) {
   test.plan(3)
   var form = { content: [ 'Some text' ] }
