@@ -26,6 +26,7 @@ function post(bole, level, callback, request, response) {
           var merkle = merkleize(form)
           var digest = merkle.digest
           level.exists(digest, function(error, exists) {
+            /* istanbul ignore if */
             if (error) {
               internalError(response) }
             else {
@@ -42,6 +43,7 @@ function post(bole, level, callback, request, response) {
                 var batch = level.batch()
                 batchForms(batch, form, merkle)
                 batch.write(function(error) {
+                  /* istanbul ignore if */
                   if (error) {
                     internalError(response) }
                   else {
