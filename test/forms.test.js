@@ -85,6 +85,38 @@ tape('POST and GET a form', function(test) {
     .end(JSON.stringify(posted)) }) })
 
 tape('POST and GET a deep form', function(test) {
+  var form = {
+    content: [
+      'Some text',
+      { heading: 'Some Heading',
+        form: { content: [ 'Even more text' ] } } ] }
+  var digest = merkleize(form).digest
+  server(function(port, done) {
+    var post = {
+      method: 'POST',
+      path: '/forms',
+      port: port }
+    http.request(post, function(response) {
+      test.equal(
+        response.statusCode, 201,
+        'responds 201')
+      test.assert(
+        isSHA256(response.headers.location.slice(7)),
+        'sets Location header')
+      var get = {
+        path: ( '/forms/' + digest ),
+        port: port }
+      http.get(get, function(response) {
+        response.pipe(concat(function(buffer) {
+          var served = JSON.parse(buffer)
+          test.same(
+            served, form,
+            'serves the same form back')
+          done()
+          test.end() })) }) })
+    .end(JSON.stringify(form)) }) })
+
+tape('POST and GET a child form', function(test) {
   var posted = {
     content: [
       'Some text',
@@ -112,7 +144,7 @@ tape('POST and GET a deep form', function(test) {
           var served = JSON.parse(buffer)
           test.same(
             served, child,
-            'serves the same form back')
+            'serves the child form back')
           done()
           test.end() })) }) })
     .end(JSON.stringify(posted)) }) })
