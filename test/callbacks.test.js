@@ -86,3 +86,58 @@ tape('callback on POST /forms', function(test) {
           function(error) {
             test.ifError(error)
             done() }) }) }) })
+
+tape('no callback on POST /forms with existing form', function(test) {
+  var form = { content: [ 'Some text' ] }
+  var calledback = http
+    .createServer()
+    .on('request', function(request, response) {
+      test.equal(true, false, 'no callback request received')
+      response.end()
+      calledback.close() })
+    .listen(0, function() {
+      var calledbackPort = this.address().port
+      var callbackURL = ( 'http://localhost:' + calledbackPort + '/x' )
+      server(function(callingPort, done) {
+        series(
+          [ function(done) {
+              http
+                .request({
+                  method: 'POST',
+                  path: '/forms',
+                  port: callingPort })
+                .once('response', function(response) {
+                  test.equal(response.statusCode, 201, 'posted form')
+                  done() })
+                .once('error', done)
+                .end(JSON.stringify(form)) },
+            function(done) {
+              http
+                .request({
+                  method: 'POST',
+                  path: '/callbacks',
+                  port: callingPort })
+                .once('response', function(response) {
+                  test.equal(response.statusCode, 202, 'registered')
+                  done() })
+                .once('error', done)
+                .end(callbackURL) },
+            function(done) {
+              http
+                .request({ method: 'POST', path: '/forms', port: callingPort })
+                .once('response', function(response) {
+                  test.equal(response.statusCode, 200, 'posted form')
+                  done() })
+                .once('error', done)
+                .end(JSON.stringify(form)) },
+            function () {
+              setTimeout(
+                function() {
+                  calledback.close()
+                  done()
+                  test.end() },
+                100) } ],
+          function(error) {
+            test.ifError(error)
+            calledback.close()
+            done() }) }) }) })

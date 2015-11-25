@@ -1,3 +1,4 @@
+var exists = require('level-exists')
 var get = require('./routes/get')
 var isSHA256 = require('is-sha-256-hex-digest')
 var list = require('./routes/list')
@@ -9,6 +10,7 @@ var url = require('url')
 var HTTPCallback = require('httpcallback')
 
 module.exports = function(bole, level) {
+  exists.install(level)
   var callback = new HTTPCallback()
   return function(request, response) {
     var method = request.method

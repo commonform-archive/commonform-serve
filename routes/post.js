@@ -24,16 +24,29 @@ function post(bole, level, callback, request, response) {
         // Valid Common Form
         else {
           var merkle = merkleize(form)
-          var location = ( '/forms/' + merkle.digest )
-          var batch = level.batch()
-          batch.digests = [ ]
-          batchForms(batch, form, merkle)
-          batch.write(function(error) {
+          var digest = merkle.digest
+          level.exists(digest, function(error, exists) {
             if (error) {
               internalError(response) }
             else {
-              response.statusCode = 201
-              response.setHeader('Location', location)
-              response.end()
-              callback.send(function(stream) {
-                stream.end(merkle.digest) }) } }) } } }) })) }
+              var location = ( '/forms/' + merkle.digest )
+              // If the form already exists, just respond 201, and don't POST
+              // to callbacks.
+              if (exists) {
+                response.statusCode = 200
+                response.setHeader('Location', location)
+                response.end() }
+              // If the form is a new one, write to LevelUp and POST the root
+              // digest to callbacks.
+              else {
+                var batch = level.batch()
+                batchForms(batch, form, merkle)
+                batch.write(function(error) {
+                  if (error) {
+                    internalError(response) }
+                  else {
+                    response.statusCode = 201
+                    response.setHeader('Location', location)
+                    response.end()
+                    callback.send(function(stream) {
+                      stream.end(digest) }) } }) } } }) } } }) })) }

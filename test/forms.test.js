@@ -2,6 +2,7 @@ var concat = require('concat-stream')
 var http = require('http')
 var isSHA256 = require('is-sha-256-hex-digest')
 var merkleize = require('commonform-merkleize')
+var series = require('async-series')
 var server = require('./server')
 var tape = require('tape')
 
@@ -41,6 +42,53 @@ tape('POST / with invalid form', function(test) {
       done()
       test.end() })
     .end(JSON.stringify(form)) }) })
+
+tape('POST / with valid form', function(test) {
+  var form = { content: [ 'Some text' ] }
+  var digest = merkleize(form).digest
+  server(function(port, done) {
+    var request = {
+      method: 'POST',
+      path: '/forms',
+      port: port }
+    series(
+      [ function(done) {
+          http.request(request)
+            .once('response', function(response) {
+              test.equal(
+                response.statusCode, 201,
+                'responds 201')
+              test.assert(
+                response.headers.hasOwnProperty('location'),
+                'sets Location header')
+              test.assert(
+                response.headers.location.indexOf(digest),
+                'location includes digest')
+              done() })
+            .once('error', done)
+            .end(JSON.stringify(form)) },
+        function(done) {
+          http.request(request)
+            .once('response', function(response) {
+              test.equal(
+                response.statusCode, 200,
+                'responds 200')
+              test.assert(
+                response.headers.hasOwnProperty('location'),
+                'sets Location header again')
+              test.assert(
+                response.headers.location.indexOf(digest),
+                'location includes digest again')
+              done() })
+            .once('error', done)
+            .end(JSON.stringify(form)) },
+        function() {
+          done()
+          test.end() } ],
+      function(error) {
+        test.ifError(error)
+        done()
+        test.end() }) }) })
 
 tape('POST / with non-JSON', function(test) {
   server(function(port, done) {
