@@ -9,10 +9,7 @@ var url = require('url')
 tape('POST /callbacks with URL', function(test) {
   server(function(port, done) {
     http
-      .request({
-        method: 'POST',
-        path: '/callbacks',
-        port: port })
+      .request({ method: 'POST', path: '/callbacks', port: port })
       .once('response', function(response) {
         test.equal(response.statusCode, 202, 'responds 202')
         done()
@@ -22,10 +19,7 @@ tape('POST /callbacks with URL', function(test) {
 tape('POST /callbacks with bad URL', function(test) {
   server(function(port, done) {
     http
-      .request({
-        method: 'POST',
-        path: '/callbacks',
-        port: port })
+      .request({ method: 'POST', path: '/callbacks', port: port })
       .once('response', function(response) {
         test.equal(response.statusCode, 400, 'responds 400')
         done()
@@ -54,17 +48,12 @@ tape('callback on POST /forms', function(test) {
         throw new Error() } })
     .listen(0, function() {
       var calledbackPort = this.address().port
-      var callbackURL = (
-        'http://localhost:' + calledbackPort +
-        endpoint )
-      server(function(callingPort, done) {
+      var callbackURL = ( 'http://localhost:' + calledbackPort + endpoint )
+      server(function(port, done) {
         series(
           [ function(done) {
               http
-                .request({
-                  method: 'POST',
-                  path: '/callbacks',
-                  port: callingPort })
+                .request({ method: 'POST', path: '/callbacks', port: port })
                 .once('response', function(response) {
                   test.equal(response.statusCode, 202, 'registered')
                   done() })
@@ -72,10 +61,7 @@ tape('callback on POST /forms', function(test) {
                 .end(callbackURL) },
             function(done) {
               http
-                .request({
-                  method: 'POST',
-                  path: '/forms',
-                  port: callingPort })
+                .request({ method: 'POST', path: '/forms', port: port })
                 .once('response', function(response) {
                   test.equal(response.statusCode, 201, 'posted form')
                   done() })
@@ -98,14 +84,11 @@ tape('no callback on POST /forms with existing form', function(test) {
     .listen(0, function() {
       var calledbackPort = this.address().port
       var callbackURL = ( 'http://localhost:' + calledbackPort + '/x' )
-      server(function(callingPort, done) {
+      server(function(port, done) {
         series(
           [ function(done) {
               http
-                .request({
-                  method: 'POST',
-                  path: '/forms',
-                  port: callingPort })
+                .request({ method: 'POST', path: '/forms', port: port })
                 .once('response', function(response) {
                   test.equal(response.statusCode, 201, 'posted form')
                   done() })
@@ -113,10 +96,7 @@ tape('no callback on POST /forms with existing form', function(test) {
                 .end(JSON.stringify(form)) },
             function(done) {
               http
-                .request({
-                  method: 'POST',
-                  path: '/callbacks',
-                  port: callingPort })
+                .request({ method: 'POST', path: '/callbacks', port: port })
                 .once('response', function(response) {
                   test.equal(response.statusCode, 202, 'registered')
                   done() })
@@ -124,7 +104,7 @@ tape('no callback on POST /forms with existing form', function(test) {
                 .end(callbackURL) },
             function(done) {
               http
-                .request({ method: 'POST', path: '/forms', port: callingPort })
+                .request({ method: 'POST', path: '/forms', port: port })
                 .once('response', function(response) {
                   test.equal(response.statusCode, 200, 'posted form')
                   done() })

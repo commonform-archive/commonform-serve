@@ -10,14 +10,9 @@ tape('POST / with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
   var digest = merkleize(form).digest
   server(function(port, done) {
-    var request = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var request = { method: 'POST', path: '/forms', port: port }
     http.request(request, function(response) {
-      test.equal(
-        response.statusCode, 201,
-        'responds 201')
+      test.equal(response.statusCode, 201, 'responds 201')
       test.assert(
         response.headers.hasOwnProperty('location'),
         'sets Location header')
@@ -31,14 +26,9 @@ tape('POST / with valid form', function(test) {
 tape('POST / with invalid form', function(test) {
   var form = { blah: 'blah' }
   server(function(port, done) {
-    var request = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var request = { method: 'POST', path: '/forms', port: port }
     http.request(request, function(response) {
-      test.equal(
-        response.statusCode, 400,
-        'responds 400')
+      test.equal(response.statusCode, 400, 'responds 400')
       done()
       test.end() })
     .end(JSON.stringify(form)) }) })
@@ -47,17 +37,12 @@ tape('POST / with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
   var digest = merkleize(form).digest
   server(function(port, done) {
-    var request = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var request = { method: 'POST', path: '/forms', port: port }
     series(
       [ function(done) {
           http.request(request)
             .once('response', function(response) {
-              test.equal(
-                response.statusCode, 201,
-                'responds 201')
+              test.equal(response.statusCode, 201, 'responds 201')
               test.assert(
                 response.headers.hasOwnProperty('location'),
                 'sets Location header')
@@ -70,9 +55,7 @@ tape('POST / with valid form', function(test) {
         function(done) {
           http.request(request)
             .once('response', function(response) {
-              test.equal(
-                response.statusCode, 200,
-                'responds 200')
+              test.equal(response.statusCode, 200, 'responds 200')
               test.assert(
                 response.headers.hasOwnProperty('location'),
                 'sets Location header again')
@@ -92,14 +75,9 @@ tape('POST / with valid form', function(test) {
 
 tape('POST / with non-JSON', function(test) {
   server(function(port, done) {
-    var request = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var request = { method: 'POST', path: '/forms', port: port }
     http.request(request, function(response) {
-      test.equal(
-        response.statusCode, 400,
-        'responds 400')
+      test.equal(response.statusCode, 400, 'responds 400')
       done()
       test.end() })
     .end('just plain text') }) })
@@ -107,14 +85,9 @@ tape('POST / with non-JSON', function(test) {
 tape('POST and GET a form', function(test) {
   var posted = { content: [ 'Some text' ] }
   server(function(port, done) {
-    var post = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var post = { method: 'POST', path: '/forms', port: port }
     http.request(post, function(response) {
-      test.equal(
-        response.statusCode, 201,
-        'responds 201')
+      test.equal(response.statusCode, 201, 'responds 201')
       test.assert(
         isSHA256(response.headers.location.slice(7)),
         'sets Location header')
@@ -124,10 +97,7 @@ tape('POST and GET a form', function(test) {
       http.get(get, function(response) {
         response.pipe(concat(function(buffer) {
           var served = JSON.parse(buffer)
-          test.same(
-            served,
-            posted,
-            'serves the same form back')
+          test.same(served, posted, 'serves the same form back')
           done()
           test.end() })) }) })
     .end(JSON.stringify(posted)) }) })
@@ -140,14 +110,9 @@ tape('POST and GET a deep form', function(test) {
         form: { content: [ 'Even more text' ] } } ] }
   var digest = merkleize(form).digest
   server(function(port, done) {
-    var post = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var post = { method: 'POST', path: '/forms', port: port }
     http.request(post, function(response) {
-      test.equal(
-        response.statusCode, 201,
-        'responds 201')
+      test.equal(response.statusCode, 201, 'responds 201')
       test.assert(
         isSHA256(response.headers.location.slice(7)),
         'sets Location header')
@@ -157,9 +122,7 @@ tape('POST and GET a deep form', function(test) {
       http.get(get, function(response) {
         response.pipe(concat(function(buffer) {
           var served = JSON.parse(buffer)
-          test.same(
-            served, form,
-            'serves the same form back')
+          test.same(served, form, 'serves the same form back')
           done()
           test.end() })) }) })
     .end(JSON.stringify(form)) }) })
@@ -173,14 +136,9 @@ tape('POST and GET a child form', function(test) {
   var child = posted.content[1].form
   var childDigest = merkleize(child).digest
   server(function(port, done) {
-    var post = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var post = { method: 'POST', path: '/forms', port: port }
     http.request(post, function(response) {
-      test.equal(
-        response.statusCode, 201,
-        'responds 201')
+      test.equal(response.statusCode, 201, 'responds 201')
       test.assert(
         isSHA256(response.headers.location.slice(7)),
         'sets Location header')
@@ -190,9 +148,7 @@ tape('POST and GET a child form', function(test) {
       http.get(get, function(response) {
         response.pipe(concat(function(buffer) {
           var served = JSON.parse(buffer)
-          test.same(
-            served, child,
-            'serves the child form back')
+          test.same(served, child, 'serves the child form back')
           done()
           test.end() })) }) })
     .end(JSON.stringify(posted)) }) })
@@ -204,9 +160,7 @@ tape('GET a nonexistent form', function(test) {
       path: ( '/forms/' + digest ),
       port: port }
     http.get(get, function(response) {
-      test.equal(
-        response.statusCode, 404,
-        'responds 404')
+      test.equal(response.statusCode, 404, 'responds 404')
       done()
       test.end() }) }) })
 
@@ -219,17 +173,10 @@ tape('GET /forms', function(test) {
   var parentDigest = merkleize(posted).digest
   var childDigest = merkleize(posted.content[1].form).digest
   server(function(port, done) {
-    var post = {
-      method: 'POST',
-      path: '/forms',
-      port: port }
+    var post = { method: 'POST', path: '/forms', port: port }
     http.request(post, function(response) {
-      test.equal(
-        response.statusCode, 201,
-        'responds 201')
-      var get = {
-        path: '/forms',
-        port: port }
+      test.equal(response.statusCode, 201, 'responds 201')
+      var get = { path: '/forms', port: port }
       http.get(get, function(response) {
         response.pipe(concat(function(buffer) {
           test.same(
