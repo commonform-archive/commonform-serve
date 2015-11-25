@@ -2,6 +2,7 @@ module.exports = post
 
 var batchForms = require('../batch-forms')
 var concat = require('concat-stream')
+var internalError = require('./internal-error')
 var merkleize = require('commonform-merkleize')
 var parseJSON = require('../parse-json')
 var validate = require('commonform-validate')
@@ -29,8 +30,7 @@ function post(bole, level, callback, request, response) {
           batchForms(batch, form, merkle)
           batch.write(function(error) {
             if (error) {
-              response.statusCode = 500
-              response.end() }
+              internalError(response) }
             else {
               response.statusCode = 201
               response.setHeader('Location', location)
