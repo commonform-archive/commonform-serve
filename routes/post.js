@@ -1,10 +1,10 @@
 module.exports = post
 
-var batchForms = require('../batch-forms')
 var concat = require('concat-stream')
 var internalError = require('./internal-error')
+var isChild = require('commonform-predicate').child
 var merkleize = require('commonform-merkleize')
-var parseJSON = require('../parse-json')
+var stringify = require('commonform-serialize').stringify
 var validate = require('commonform-validate')
 
 function post(bole, level, callback, request, response) {
@@ -64,3 +64,29 @@ function post(bole, level, callback, request, response) {
                     bole.info({ event: 'Sending Callbacks' })
                     callback.send(function(stream) {
                       stream.end(digest) }) } }) } } }) } } }) })) }
+
+// Given a new LevelUp chain-style batch, a denormalized Common Form, and the
+// output of commonform-merkleize for that Common Form, add LevelUp put
+// operations to the batch for the Common Form and each of its children.
+function batchForms(batch, form, merkle) {
+  // Use commonform-stringify to produce the text to be stored.
+  var stringified = stringify(form)
+  var digest = merkle.digest
+  batch.put(digest, stringified)
+  // Recurse children.
+  form.content
+    .forEach(function(element, index) {
+      if (isChild(element)) {
+        var childForm = element.form
+        var childMerkle = merkle.content[index]
+        batchForms(batch, childForm, childMerkle) } }) }
+
+// JSON.parse, wrapped to take an errback.
+function parseJSON(input, callback) {
+  var error
+  var result
+  try {
+    result = JSON.parse(input) }
+  catch (e) {
+    error = e }
+  callback(error, result) }
