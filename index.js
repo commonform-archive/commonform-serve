@@ -2,6 +2,7 @@ var get = require('./routes/get')
 var isSHA256 = require('is-sha-256-hex-digest')
 var list = require('./routes/list')
 var methodNotAllowed = require('./routes/method-not-allowed')
+var notFound = require('./routes/not-found')
 var post = require('./routes/post')
 var root = require('./routes/root')
 var url = require('url')
@@ -36,5 +37,4 @@ module.exports = function(bole, level) {
       else {
         methodNotAllowed(response) } }
     else {
-      response.statusCode = 404
-      response.end() } } }
+      notFound(response) } } }
