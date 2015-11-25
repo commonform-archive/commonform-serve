@@ -19,7 +19,7 @@ module.exports = function(bole, level) {
         root(bole, level, request, response) }
       else {
         methodNotAllowed(response) } }
-    else if (pathname === '/forms/' || pathname === '/forms') {
+    else if (pathname === '/forms') {
       if (method === 'POST') {
         post(bole, level, callback, request, response) }
       else if (method === 'GET') {
