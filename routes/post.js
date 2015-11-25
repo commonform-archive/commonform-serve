@@ -6,7 +6,7 @@ var merkleize = require('commonform-merkleize')
 var parseJSON = require('../parse-json')
 var validate = require('commonform-validate')
 
-function post(bole, level, request, response) {
+function post(bole, level, callback, request, response) {
   request.pipe(concat(function(buffer) {
     parseJSON(buffer, function(error, form) {
       // Invalid JSON
@@ -25,6 +25,7 @@ function post(bole, level, request, response) {
           var merkle = merkleize(form)
           var location = ( '/forms/' + merkle.digest )
           var batch = level.batch()
+          batch.digests = [ ]
           batchForms(batch, form, merkle)
           batch.write(function(error) {
             if (error) {
@@ -33,4 +34,6 @@ function post(bole, level, request, response) {
             else {
               response.statusCode = 201
               response.setHeader('Location', location)
-              response.end() } }) } } }) })) }
+              response.end()
+              callback.send(function(stream) {
+                stream.end(merkle.digest) }) } }) } } }) })) }
