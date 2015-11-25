@@ -149,6 +149,19 @@ tape('POST and GET a child form', function(test) {
           test.end() })) }) })
     .end(JSON.stringify(posted)) }) })
 
+tape('GET a nonexistent form', function(test) {
+  var digest = 'a'.repeat(64)
+  server(function(port, done) {
+    var get = {
+      path: ( '/forms/' + digest ),
+      port: port }
+    http.get(get, function(response) {
+      test.equal(
+        response.statusCode, 404,
+        'responds 404')
+      done()
+      test.end() }) }) })
+
 tape('GET /forms', function(test) {
   var posted = {
     content: [
