@@ -6,7 +6,7 @@ var series = require('async-series')
 var server = require('./server')
 var tape = require('tape')
 
-tape('POST / with valid form', function(test) {
+tape('POST /forms with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
   var digest = merkleize(form).digest
   server(function(port, done) {
@@ -23,7 +23,7 @@ tape('POST / with valid form', function(test) {
       test.end() })
     .end(JSON.stringify(form)) }) })
 
-tape('POST / with invalid form', function(test) {
+tape('POST /forms with invalid form', function(test) {
   var form = { blah: 'blah' }
   server(function(port, done) {
     var request = { method: 'POST', path: '/forms', port: port }
@@ -33,7 +33,7 @@ tape('POST / with invalid form', function(test) {
       test.end() })
     .end(JSON.stringify(form)) }) })
 
-tape('POST / with valid form', function(test) {
+tape('POST /forms with valid form', function(test) {
   var form = { content: [ 'Some text' ] }
   var digest = merkleize(form).digest
   server(function(port, done) {
@@ -73,7 +73,7 @@ tape('POST / with valid form', function(test) {
         done()
         test.end() }) }) })
 
-tape('POST / with non-JSON', function(test) {
+tape('POST /forms with non-JSON', function(test) {
   server(function(port, done) {
     var request = { method: 'POST', path: '/forms', port: port }
     http.request(request, function(response) {
