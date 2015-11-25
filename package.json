@@ -26,6 +26,7 @@
     "concat-stream": "^1.5.1",
     "httpcallback": "0.1.0-prerelease-1",
     "is-sha-256-hex-digest": "^1.0.0",
-    "level-exists": "^2.0.1"
+    "level-exists": "^2.0.1",
+    "uuid": "^2.0.1"
   }
 }

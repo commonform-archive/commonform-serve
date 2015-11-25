@@ -10,6 +10,7 @@ module.exports = function get(bole, level, request, response) {
       if (error.notFound) {
         notFound(response) }
       else {
+        bole.error(error)
         internalError(response) } }
     else {
       response.setHeader('Content-Type', 'application/json')
