@@ -1,6 +1,6 @@
 module.exports = function list(bole, level, request, response) {
   var keyCount = 0
-  level.createKeyStream()
+  level.createKeyStream({ fillCache: false })
     .on('data', function(key) {
       keyCount++
       response.write(( key + '\n' )) })
