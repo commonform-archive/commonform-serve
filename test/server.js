@@ -21,12 +21,12 @@ function startTestServer(callback, port) {
       { level: 'info', stream: process.stdout },
       { level: 'warn', stream: process.stdout },
       { level: 'error', stream: process.stdout } ]) }
-    http.createServer(handler(log, level))
-      .listen(port, function() {
-        // Call back with the port assigned by the operating system.
-        callback(
-          this.address().port,
-          this.close.bind(this)) }) }
+  http.createServer(handler(log, level))
+    .listen(port, function() {
+      // Call back with the port assigned by the operating system.
+      callback(
+        this.address().port,
+        this.close.bind(this)) }) }
 
 // Run this script with `node test/server.js` to start a test server on port
 // 8080. Log messages will go to stdout.
