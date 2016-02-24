@@ -50,7 +50,7 @@ module.exports = function(bole, level) {
     request.log.info(request)
     // Log the response status code automatically.
     request.once('end', function() {
-      request.log.info({ even: 'end', status: response.statusCode }) })
+      request.log.info({ event: 'end', status: response.statusCode }) })
 
     // Route the request.
     var method = request.method
